@@ -290,6 +290,11 @@ public class RelatorioDAO {
     public List<Relatorio> getPorcentagemLimiteGastoSubcategoriaGroup(long idUsuario, long idSubcategoria) {
         EntityManager em = JPAUtil.getEntityManager();
         System.out.println("Porcentagem Subbcategoria Agrupada:"+idSubcategoria);
+        Date dataAtual = new Date();
+        Calendar calendar = Calendar.getInstance();
+        int ano = calendar.get(Calendar.YEAR);
+        int mes = calendar.get(Calendar.MONTH) + 1;
+        
         List<Object[]> results = em.createQuery("select t3.id as idLimite, "
                 + "t1.id as idSubcategoria, "
                 + "t1.descSubcategoria as categoria, "
@@ -306,10 +311,14 @@ public class RelatorioDAO {
                 + "where (t1.usuario.id = :idUsuario or t1.usuario.id = null) "
                 + "and t2.conta.usuario.id = :idUsuario "
                 + "and t1.id = :idSubcategoria "
+                + "and month(t2.dtLancamento) = :mes " 
+                + "and year(t2.dtLancamento) = :ano "
                 + "group by t1.id  "
                 + "order by soma desc ")
                 .setParameter("idUsuario", idUsuario)
                 .setParameter("idSubcategoria", idSubcategoria)
+                .setParameter("mes", mes)
+                .setParameter("ano", ano)
                 .getResultList();
         
         System.out.println("tamanho: " + results.size());
