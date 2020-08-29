@@ -1,2 +1,2 @@
 # serverupmoney
-Servidor Destinado ao App UpMyney
+Servidor Destinado ao App UpMoney
