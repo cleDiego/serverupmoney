@@ -312,6 +312,8 @@ public class RelatorioDAO {
                 + "where (t1.usuario.id = :idUsuario or t1.usuario.id = null) "
                 + "and t2.conta.usuario.id = :idUsuario "
                 + "and t1.id = :idSubcategoria "
+                + "and month(t2.dtLancamento) = :mes "
+                + "and year(t2.dtLancamento) = :ano "
                 + "group by t1.id  "
                 + "order by soma desc ")
                 .setParameter("idUsuario", idUsuario)
